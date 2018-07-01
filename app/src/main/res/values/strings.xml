@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MustSee</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="signin">SIGN IN</string>
+    <string name="register">REGISTER</string>
+    <string name="registerLabel">Don\'t have an account?</string>
 </resources>
