@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".RegisterActivity">
+
+    <EditText
+        android:id="@+id/registerInsertName"
+        style="@style/TransparentEditText"
+        android:layout_width="340dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="92dp"
+        android:ems="10"
+        android:hint="@string/insert_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.214"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/registerInsertEmail"
+        style="@style/TransparentEditText"
+        android:layout_width="340dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerInsertName" />
+
+    <EditText
+        android:id="@+id/registerInsertUsername"
+        style="@style/TransparentEditText"
+        android:layout_width="340dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerInsertEmail" />
+
+    <EditText
+        android:id="@+id/registerInsertPassword"
+        style="@style/TransparentEditText"
+        android:layout_width="340dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerInsertUsername" />
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profilePhoto"
+        android:layout_width="152dp"
+        android:layout_height="139dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/default_user_profile_image"
+        app:civ_border_color="#9c9fa3"
+        app:civ_border_width="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerInsertPassword" />
+
+    <Button
+        android:id="@+id/btnInsertCamera"
+        style="@style/WhiteButtonLittleTransparent"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@android:drawable/ic_menu_camera"
+        android:drawableStart="@android:drawable/ic_menu_camera"
+        android:drawableTint="#170556"
+        android:paddingLeft="10dp"
+        android:text="@string/camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/profilePhoto"
+        app:layout_constraintTop_toTopOf="@+id/profilePhoto" />
+
+    <Button
+        android:id="@+id/btnInsertUpload"
+        style="@style/WhiteButtonLittleTransparent"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="19dp"
+        android:drawableLeft="@android:drawable/ic_menu_upload"
+        android:drawableStart="@android:drawable/ic_menu_upload"
+        android:drawableTint="#170556"
+        android:paddingLeft="10dp"
+        android:text="@string/uploadPic"
+        app:layout_constraintBottom_toBottomOf="@+id/profilePhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/profilePhoto"
+        app:layout_constraintTop_toBottomOf="@+id/btnInsertCamera" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/WhiteButtonLittleTransparent"
+        android:layout_width="324dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilePhoto" />
+
+</android.support.constraint.ConstraintLayout>

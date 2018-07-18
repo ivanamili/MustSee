@@ -5,4 +5,9 @@
     <string name="signin">SIGN IN</string>
     <string name="register">REGISTER</string>
     <string name="registerLabel">Don\'t have an account?</string>
+    <string name="insert_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="camera">Camera</string>
+    <string name="uploadPic">Import</string>
 </resources>
+
