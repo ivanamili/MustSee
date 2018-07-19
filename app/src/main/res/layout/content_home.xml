@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".HomeActivity"
+    tools:showIn="@layout/app_bar_home">
+
+    <Button
+        android:id="@+id/bthShowMap"
+        style="@style/HomeButton"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="52dp"
+        android:drawableLeft="@android:drawable/ic_menu_mapmode"
+        android:drawableStart="@android:drawable/ic_menu_mapmode"
+        android:text="@string/show_map_title"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSearchPlaces"
+        style="@style/HomeButton"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="28dp"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:text="@string/search_place_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bthShowMap" />
+
+    <Button
+        android:id="@+id/btnNearMe"
+        style="@style/HomeButton"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="28dp"
+        android:drawableLeft="@android:drawable/ic_menu_directions"
+        android:drawableStart="@android:drawable/ic_menu_directions"
+        android:text="@string/near_me"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSearchPlaces" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/HomeButton"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="28dp"
+        android:drawableLeft="@drawable/friends_icon"
+        android:drawableStart="@drawable/friends_icon"
+        android:text="@string/my_friends_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNearMe" />@drawable/ic_friends"
+    android:text="@string/near_me"
+    tools:layout_editor_absoluteX="122dp"
+    tools:layout_editor_absoluteY="287dp" />
+</android.support.constraint.ConstraintLayout>

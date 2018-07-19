@@ -91,6 +91,7 @@
         android:drawableStart="@android:drawable/ic_menu_camera"
         android:drawableTint="#170556"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -115,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnInsertCamera" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnRegisterScreenRegister"
         style="@style/WhiteButtonLittleTransparent"
         android:layout_width="324dp"
         android:layout_height="50dp"

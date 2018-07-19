@@ -5,9 +5,23 @@
     <string name="signin">SIGN IN</string>
     <string name="register">REGISTER</string>
     <string name="registerLabel">Don\'t have an account?</string>
+
     <string name="insert_name">Full Name</string>
     <string name="email">Email</string>
     <string name="camera">Camera</string>
     <string name="uploadPic">Import</string>
+    <string name="title_activity_home">Must See</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="show_map_title">Show Map</string>
+    <string name="search_place_title">Search Places</string>
+    <string name="near_me">Near Me</string>
+    <string name="my_friends_title">My Friends</string>
 </resources>
 
