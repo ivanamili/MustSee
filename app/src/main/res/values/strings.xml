@@ -23,5 +23,7 @@
     <string name="search_place_title">Search Places</string>
     <string name="near_me">Near Me</string>
     <string name="my_friends_title">My Friends</string>
+
+    <string name="show_me_on_map">Show me on map</string>
 </resources>
 

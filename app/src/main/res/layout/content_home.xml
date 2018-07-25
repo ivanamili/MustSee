@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnSearchPlaces" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/bth_friends"
         style="@style/HomeButton"
         android:layout_width="306dp"
         android:layout_height="49dp"
