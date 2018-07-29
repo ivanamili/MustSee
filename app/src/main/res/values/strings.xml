@@ -25,5 +25,13 @@
     <string name="my_friends_title">My Friends</string>
 
     <string name="show_me_on_map">Show me on map</string>
+
+    <string name="my_places_nav_title">My places</string>
+    <string name="my_must_see_nav_title">My must see list</string>
+    <string name="visited_list_title">Visited places</string>
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="notification_service_title">Notification service</string>
+    <string name="settings_title">Settings</string>
+    <string name="logout_title">Logout</string>
 </resources>
 

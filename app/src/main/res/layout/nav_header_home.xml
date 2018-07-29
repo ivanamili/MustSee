@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="180dp"
     android:background="@drawable/side_meny_background"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -12,73 +12,63 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    tools:paddingBottom="2dp"
+    tools:paddingBottom="0dp"
     tools:paddingLeft="8dp"
     tools:paddingRight="2dp"
-    tools:paddingTop="10dp">
+    tools:paddingTop="0dp">
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sideDrawerProfilePhoto"
         android:layout_width="75dp"
-        android:layout_height="94dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="71dp"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/default_user_profile_image"
         app:civ_border_color="#9c9fa3"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sideDrawerTxtUsername"
         style="@style/TextBiggerBold"
         android:layout_width="199dp"
-        android:layout_height="43dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toEndOf="@+id/sideDrawerProfilePhoto"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/sideDrawerTxtFullName"
-        android:layout_width="196dp"
-        android:layout_height="22dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:text="Full Name"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/sideDrawerProfilePhoto"
-        app:layout_constraintTop_toTopOf="@+id/sideDrawerTxtUsername" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sideDrawerProfilePhoto"
+        tools:paddingTop="2dp" />
 
     <TextView
         android:id="@+id/sideDrawerTxtExpPoints"
         style="@style/TextBiggerBold"
         android:layout_width="194dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
         android:text="100000XP"
-        app:layout_constraintStart_toEndOf="@+id/sideDrawerProfilePhoto"
-        app:layout_constraintTop_toBottomOf="@+id/sideDrawerTxtFullName" />
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sideDrawerTxtUsername" />
 
     <TextView
         android:id="@+id/sideDrawerTxtShowMeOnMap"
-        android:layout_width="169dp"
+        android:layout_width="0dp"
         android:layout_height="32dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:text="@string/show_me_on_map"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
