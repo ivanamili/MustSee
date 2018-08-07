@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "146266744696",
+    "firebase_url": "https://mustseeproject-89b6b.firebaseio.com",
+    "project_id": "mustseeproject-89b6b",
+    "storage_bucket": "mustseeproject-89b6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146266744696:android:1a7b6c7cc53192cc",
+        "android_client_info": {
+          "package_name": "mosis.ivana.mustsee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146266744696-oafhc64ev01408fa7gkec2d902ir919j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mosis.ivana.mustsee",
+            "certificate_hash": "0689ca1b8eff5aac16e7dcdc684b965f3a19cf3d"
+          }
+        },
+        {
+          "client_id": "146266744696-aged2m91io7ck4f71tov9fpmt1bmpdnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRzX4UrEVbi7TU-5lQWM9iEtplX-wac8E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146266744696-aged2m91io7ck4f71tov9fpmt1bmpdnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

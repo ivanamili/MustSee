@@ -40,6 +40,7 @@
         android:layout_height="30dp"
         android:layout_marginBottom="12dp"
         android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:text="@string/registerLabel"
         android:textColor="@android:color/white"
         android:textSize="20sp"
