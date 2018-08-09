@@ -15,11 +15,22 @@ import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import mosis.ivana.mustsee.DataModel.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -30,12 +41,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private boolean isImageSelected=false;
     private FirebaseAuth mAuth;
 
+    private EditText txtFullName;
+    private EditText txtUsername;
+    private EditText txtEmail;
+    private EditText txtPassword;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
 
+        //get edittext references
+        txtFullName= findViewById(R.id.registerInsertName);
+        txtEmail= findViewById(R.id.registerInsertEmail);
+        txtUsername=findViewById(R.id.registerInsertUsername);
+        txtPassword=findViewById(R.id.registerInsertPassword);
 
         //set this class as onClickListeners for all buttons
         Button btnRegister= findViewById(R.id.btnRegisterScreenRegister);
@@ -49,14 +71,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateRegisterForm(){
-        EditText txtFullName= findViewById(R.id.registerInsertName);
         if(txtFullName.getText().length()==0)
         {
             txtFullName.setError("Enter fullName!");
             txtFullName.requestFocus();
             return false;
         }
-        EditText txtEmail= findViewById(R.id.registerInsertEmail);
         if(txtEmail.getText().length()==0){
             txtEmail.setError("Enter email!");
             txtEmail.requestFocus();
@@ -67,13 +87,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             txtEmail.requestFocus();
             return false;
         }
-        EditText txtUsername=findViewById(R.id.registerInsertUsername);
         if(txtUsername.getText().length()==0){
             txtUsername.setError("Insert username!");
             txtUsername.requestFocus();
             return false;
         }
-        EditText txtPassword=findViewById(R.id.registerInsertPassword);
         if(txtPassword.getText().length()==0){
             txtPassword.setError("Enter password!");
             txtPassword.requestFocus();
@@ -98,18 +116,42 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if(v.getId()==R.id.btnRegisterScreenRegister){
             if(validateRegisterForm()){
-                EditText txtEmail= findViewById(R.id.registerInsertEmail);
-                EditText txtPassword=findViewById(R.id.registerInsertPassword);
                 String email= txtEmail.getText().toString().trim();
                 String password=txtPassword.getText().toString().trim();
-                mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(RegisterActivity.this,new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //add user data to the database
-                            Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
-                            startActivity(i);
-                            finish();
+                            //adding user data to Firebase storage and firebase database
+                           FirebaseUser user= mAuth.getCurrentUser();
+                           String fullname=txtFullName.getText().toString();
+                           final User newUser=new User(user.getUid(),fullname,txtUsername.getText().toString()
+                                   ,txtPassword.getText().toString(),txtEmail.getText().toString());
+
+                           //saving image to storage
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] data = baos.toByteArray();
+
+                            final StorageReference storageRef= FirebaseStorage.getInstance().getReference().child("userProfilePhotos").child(user.getUid());
+                            storageRef.putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            newUser.setProfilePhotoUrl(uri.toString());
+                                            DatabaseReference databaseRef= FirebaseDatabase.getInstance().getReference().child("users").child(newUser.getUserId());
+                                            databaseRef.setValue(newUser);
+
+                                            Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
+                                            startActivity(i);
+                                            finish();
+
+                                        }
+                                    });
+                                }
+                            });
                         }
                         else
                         {

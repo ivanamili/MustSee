@@ -15,13 +15,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import mosis.ivana.mustsee.DataModel.User;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
+    public static User loggedUser;
+    private DatabaseReference databaseRef;
+
+    private CircleImageView profileImageView;
+    TextView username;
+    TextView points;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +47,29 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mAuth = FirebaseAuth.getInstance();
+        databaseRef= FirebaseDatabase.getInstance().getReference();
+
+        final DatabaseReference logedUserDatabaseRef= databaseRef.child("users").child(mAuth.getCurrentUser().getUid());
+        logedUserDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                loggedUser= dataSnapshot.getValue(User.class);
+                Picasso.get().load(loggedUser.getProfilePhotoUrl()).into(profileImageView);
+
+                username.setText(loggedUser.getUsername());
+                points.setText(String.valueOf(loggedUser.getXpPoints()));
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
 
@@ -53,6 +94,11 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        username= headerView.findViewById(R.id.sideDrawerTxtUsername);
+        points= headerView.findViewById(R.id.sideDrawerTxtExpPoints);
+        profileImageView= headerView.findViewById(R.id.sideDrawerProfilePhoto);
+
     }
 
     @Override
@@ -95,7 +141,7 @@ public class HomeActivity extends AppCompatActivity
 
         //implement selecting itmes from nav drawer
         if(id==R.id.nav_logout){
-            mAuth = FirebaseAuth.getInstance();
+
             mAuth.signOut();
             Intent i= new Intent(this,MainActivity.class);
             startActivity(i);
