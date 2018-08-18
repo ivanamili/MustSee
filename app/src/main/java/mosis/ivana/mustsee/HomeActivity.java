@@ -3,6 +3,7 @@ package mosis.ivana.mustsee;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.geofire.GeoLocation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,11 +36,15 @@ public class HomeActivity extends AppCompatActivity
 
     private FirebaseAuth mAuth;
     public static User loggedUser;
+    public static GeoLocation userLocation;
     private DatabaseReference databaseRef;
+
+    Intent locationServiceIntent;
 
     private CircleImageView profileImageView;
     TextView username;
     TextView points;
+    DrawerLayout drawer;
 
 
     @Override
@@ -51,6 +57,10 @@ public class HomeActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         databaseRef= FirebaseDatabase.getInstance().getReference();
 
+        locationServiceIntent= new Intent(this, LocationTrackingService.class);
+        locationServiceIntent.putExtra("userId",mAuth.getCurrentUser().getUid());
+        startService(locationServiceIntent);
+
         final DatabaseReference logedUserDatabaseRef= databaseRef.child("users").child(mAuth.getCurrentUser().getUid());
         logedUserDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -60,8 +70,6 @@ public class HomeActivity extends AppCompatActivity
 
                 username.setText(loggedUser.getUsername());
                 points.setText(String.valueOf(loggedUser.getXpPoints()));
-
-
             }
 
             @Override
@@ -69,9 +77,6 @@ public class HomeActivity extends AppCompatActivity
 
             }
         });
-
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -81,12 +86,9 @@ public class HomeActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
-
-
         fab.setColorFilter(Color.WHITE);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -103,7 +105,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -116,6 +118,12 @@ public class HomeActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(locationServiceIntent);
+        super.onDestroy();
     }
 
     @Override
@@ -141,7 +149,6 @@ public class HomeActivity extends AppCompatActivity
 
         //implement selecting itmes from nav drawer
         if(id==R.id.nav_logout){
-
             mAuth.signOut();
             Intent i= new Intent(this,MainActivity.class);
             startActivity(i);
