@@ -33,5 +33,8 @@
     <string name="notification_service_title">Notification service</string>
     <string name="settings_title">Settings</string>
     <string name="logout_title">Logout</string>
+    <string name="notification_text">Application Must See has been tracking device location in the background.</string>
+    <string name="discoverable">Become Discoverable</string>
+    <string name="searchFriends">Search for friends</string>
 </resources>
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     //view elements
     EditText txtEmail, txtPassword;
+    ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         //creating FireBaseAuth instance
         mAuth = FirebaseAuth.getInstance();
         loginInProgress=false;
+        spinner= findViewById(R.id.progressBarLoginActivity);
+        spinner.setVisibility(View.GONE);
 
         //proceed to home activity directly, user is already signed in
         if(mAuth.getCurrentUser()!=null){
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 if(loginInProgress)
                     return;
 
@@ -91,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+
                             Intent i = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(i);
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -101,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             loginInProgress=false;
+                            spinner.setVisibility(View.GONE);
                         }
                     }
                 });

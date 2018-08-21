@@ -2,8 +2,6 @@ package mosis.ivana.mustsee;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,7 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.geofire.GeoLocation;
@@ -32,7 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import mosis.ivana.mustsee.DataModel.User;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private FirebaseAuth mAuth;
     public static User loggedUser;
@@ -45,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     TextView username;
     TextView points;
     DrawerLayout drawer;
+    private ProgressBar spinner;
 
 
     @Override
@@ -61,6 +61,13 @@ public class HomeActivity extends AppCompatActivity
         locationServiceIntent.putExtra("userId",mAuth.getCurrentUser().getUid());
         startService(locationServiceIntent);
 
+        spinner = findViewById(R.id.progressBar);
+        spinner.setVisibility(View.VISIBLE);
+
+        //setting on click listeners
+        Button btnFriends= findViewById(R.id.bth_friends);
+        btnFriends.setOnClickListener(this);
+
         final DatabaseReference logedUserDatabaseRef= databaseRef.child("users").child(mAuth.getCurrentUser().getUid());
         logedUserDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,6 +77,7 @@ public class HomeActivity extends AppCompatActivity
 
                 username.setText(loggedUser.getUsername());
                 points.setText(String.valueOf(loggedUser.getXpPoints()));
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
@@ -155,9 +163,22 @@ public class HomeActivity extends AppCompatActivity
             overridePendingTransition(0, 0);
             this.finish();
         }
+        else if (id==R.id.nav_friends){
+            Intent i= new Intent(this,FriendsActivity.class);
+            startActivity(i);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.bth_friends)
+        {
+            Intent i= new Intent(this,FriendsActivity.class);
+            startActivity(i);
+        }
     }
 }
