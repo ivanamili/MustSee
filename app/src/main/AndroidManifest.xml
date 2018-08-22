@@ -38,6 +38,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".HomeActivity"
+
             android:configChanges="orientation"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
@@ -48,10 +49,28 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".FriendsActivity"
+        <activity
+            android:name=".SearchForFriendsActivity"
             android:configChanges="orientation"
-            android:label="@string/my_friends_title"
-            android:screenOrientation="portrait"/>
+            android:label="@string/title_activity_search_for_friends"
+            android:parentActivityName=".FriendListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mosis.ivana.mustsee.FriendListActivity" />
+        </activity>
+        <activity
+            android:name=".FriendListActivity"
+            android:label="@string/title_activity_friend_list"
+            android:parentActivityName=".HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mosis.ivana.mustsee.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

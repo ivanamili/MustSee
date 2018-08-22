@@ -32,6 +32,8 @@ public class LocationTrackingService extends Service implements LocationListener
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("geofire").child("locUsers");
     GeoFire geoFire = new GeoFire(ref);
 
+    Thread serviceThread;
+
     public LocationTrackingService() {
     }
 
@@ -78,7 +80,7 @@ public class LocationTrackingService extends Service implements LocationListener
 
     private void sendLocationUpdates() {
         //Run service in different thread
-        Thread serviceThread = new Thread(new Runnable() {
+        serviceThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -108,6 +110,8 @@ public class LocationTrackingService extends Service implements LocationListener
 
     @Override
     public void onLocationChanged(Location location) {
+        if(serviceThread.isInterrupted())
+            return;
         geoFire.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
             @Override
             public void onComplete(String key, DatabaseError error) {
@@ -136,5 +140,11 @@ public class LocationTrackingService extends Service implements LocationListener
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        serviceThread.interrupt();
+        super.onDestroy();
     }
 }

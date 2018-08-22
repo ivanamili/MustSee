@@ -36,5 +36,8 @@
     <string name="notification_text">Application Must See has been tracking device location in the background.</string>
     <string name="discoverable">Become Discoverable</string>
     <string name="searchFriends">Search for friends</string>
+    <string name="title_activity_search_for_friends">Search For Friends</string>
+    <string name="title_activity_friend_list">Friends</string>
+    <string name="bluetoothSearch">Search for devices</string>
 </resources>
 

@@ -13,13 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:maxHeight="10dp"
+        android:maxWidth="10dp"
         android:indeterminate="true"
-        android:layout_centerHorizontal="true" />
+        app:mpb_showProgressBackground="true"
+        app:mpb_progressStyle="circular"
+        />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

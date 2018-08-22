@@ -117,6 +117,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            stopService(locationServiceIntent);
             super.onBackPressed();
         }
     }
@@ -164,7 +165,7 @@ public class HomeActivity extends AppCompatActivity
             this.finish();
         }
         else if (id==R.id.nav_friends){
-            Intent i= new Intent(this,FriendsActivity.class);
+            Intent i= new Intent(this,FriendListActivity.class);
             startActivity(i);
         }
 
@@ -177,7 +178,7 @@ public class HomeActivity extends AppCompatActivity
     public void onClick(View v) {
         if(v.getId()==R.id.bth_friends)
         {
-            Intent i= new Intent(this,FriendsActivity.class);
+            Intent i= new Intent(this,FriendListActivity.class);
             startActivity(i);
         }
     }
