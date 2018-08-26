@@ -39,5 +39,7 @@
     <string name="title_activity_search_for_friends">Search For Friends</string>
     <string name="title_activity_friend_list">Friends</string>
     <string name="bluetoothSearch">Search for devices</string>
+    <string name="pairedDevicesLabel">Paired devices</string>
+    <string name="discoveredDevicesLabel">Discovered devices</string>
 </resources>
 
