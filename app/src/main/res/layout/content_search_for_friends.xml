@@ -53,8 +53,8 @@
         <ProgressBar
             android:id="@+id/SearchForDevicesProgressBar"
             style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="5dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp" />
