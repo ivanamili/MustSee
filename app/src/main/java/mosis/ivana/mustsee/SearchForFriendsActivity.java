@@ -23,14 +23,20 @@ import java.util.List;
 import java.util.Set;
 
 import mosis.ivana.mustsee.DataModel.ListBluetoothAdapter;
+import mosis.ivana.mustsee.Threads.BluetoothClientThread;
 
 public class SearchForFriendsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
+
     BluetoothAdapter mBluetoothAdapter;
+
     ListBluetoothAdapter pairedListAdapter;
     ListBluetoothAdapter discoveredListAdapter;
     ListView pairedList;
     ListView discoveredList;
+
+    BluetoothClientThread sendRequestThread;
+
     ArrayList<BluetoothDevice> discoveredDevicesList;
     ProgressBar discoveryProgress;
     @Override
@@ -44,35 +50,44 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
 
         discoveredDevicesList = new ArrayList<>();
 
+        //reading already paired devices
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         ArrayList<BluetoothDevice> pairedDevicesList= new ArrayList(pairedDevices);
 
+        //setting adapter and onItemClick listener for paired devices list
         pairedListAdapter= new ListBluetoothAdapter(pairedDevicesList, getApplicationContext());
         pairedList= findViewById(R.id.PairedDevicesList);
         pairedList.setAdapter(pairedListAdapter);
         pairedList.setOnItemClickListener(this);
 
+        //setting adapter and onItemClick listener for discovered devices list
         discoveredListAdapter = new ListBluetoothAdapter(discoveredDevicesList,getApplicationContext());
         discoveredList= findViewById(R.id.DiscoveredDevicesList);
         discoveredList.setAdapter(discoveredListAdapter);
         discoveredList.setOnItemClickListener(this);
 
         //prepare for discovery
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);
+        IntentFilter bluetoothActionFoundFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(mReceiver, bluetoothActionFoundFilter);
 
+        //register receiver for listening to discovery events
+        IntentFilter filterStarted = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        IntentFilter filterFinished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        registerReceiver(discoverStateChangedReceiver, filterStarted);
+        registerReceiver(discoverStateChangedReceiver,filterFinished);
+
+        //hide progressBar by default
         discoveryProgress = findViewById(R.id.SearchForDevicesProgressBar);
-        discoveryProgress.setVisibility(View.GONE);
+        discoveryProgress.setVisibility(View.INVISIBLE);
 
-        //attach onClickListener
+        //attach onClickListener to button
         Button search= findViewById(R.id.SearchFriendsActivityBtnSearch);
         search.setOnClickListener(this);
-
-
     }
 
     // BroadcastReceiver for ACTION_FOUND.
+    //adds discovered device to adequate adapter (NOTE! add to adapter, not to list!)
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -82,11 +97,24 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
             }
         }
     };
+    // BroadcastReceiver for ACTION_DISCOVERY_STARTED and ACTION_DISCOVERY_FINISHED
+    //controls visibility of progress bar that indicates whether discovery is in progress
+    private final BroadcastReceiver discoverStateChangedReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action))
+                discoveryProgress.setVisibility(View.VISIBLE);
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
+                discoveryProgress.setVisibility(View.INVISIBLE);
+        }
+    };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //detach receivers
         unregisterReceiver(mReceiver);
+        unregisterReceiver(discoverStateChangedReceiver);
 
     }
 
@@ -96,8 +124,6 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
         {
             case R.id.SearchFriendsActivityBtnSearch:
             {
-
-                discoveryProgress.setVisibility(View.VISIBLE);
                 mBluetoothAdapter.startDiscovery();
                 break;
             }
@@ -106,8 +132,18 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //stop discover before attempting to create connection
         mBluetoothAdapter.cancelDiscovery();
-        Toast.makeText(this,"Clicked element in "+view.getId()+ " position "+position, Toast.LENGTH_SHORT).show();
-        discoveryProgress.setVisibility(View.GONE);
+        Toast.makeText(this,"Clicked element in "+parent.getId()+ " position "+position, Toast.LENGTH_SHORT).show();
+        BluetoothDevice deviceToConnect;
+        if(parent.getId()== R.id.PairedDevicesList)
+            deviceToConnect= pairedListAdapter.getItem(position);
+        else
+            deviceToConnect=discoveredListAdapter.getItem(position);
+
+        //create client side connection
+        //start thread
+        sendRequestThread= new BluetoothClientThread(deviceToConnect, getApplicationContext());
+        sendRequestThread.start();
     }
 }

@@ -11,12 +11,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import mosis.ivana.mustsee.Threads.BluetoothServerConnectionThread;
+
 public class FriendListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int REQUEST_ENABLE_BLUETOOTH_FOR_DISCOVERY = 1;
     private static final int REQUEST_ENABLE_BLUETOOTH_FOR_SEARCH = 2;
 
+    public static BluetoothServerConnectionThread bluetoothServerThread;
     BluetoothAdapter mBluetoothAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
