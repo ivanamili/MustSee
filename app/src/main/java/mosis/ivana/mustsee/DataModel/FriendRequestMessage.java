@@ -5,8 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class FriendRequestMessage {
+public class FriendRequestMessage implements Serializable {
     private String userName;
     private String id;
     private String pictureURI;

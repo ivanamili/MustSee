@@ -9,6 +9,9 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,9 +20,11 @@ import java.util.UUID;
 
 import mosis.ivana.mustsee.AppConstants;
 import mosis.ivana.mustsee.DataModel.FriendRequestMessage;
+import mosis.ivana.mustsee.DataModel.FriendsData;
 import mosis.ivana.mustsee.DataModel.MessageTag;
 import mosis.ivana.mustsee.DataModel.UserResponse;
 import mosis.ivana.mustsee.FriendListActivity;
+import mosis.ivana.mustsee.HomeActivity;
 
 public class BluetoothServerConnectionThread extends Thread {
 
@@ -39,6 +44,7 @@ public class BluetoothServerConnectionThread extends Thread {
 
     public BluetoothServerConnectionThread(Context context) {
         this.context=context;
+        mainHandler=new Handler();
         //get adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mSocket = null;
@@ -101,11 +107,12 @@ public class BluetoothServerConnectionThread extends Thread {
 
     private void acceptFriendRequest(OutputStream outStream){
         //wait for request
-        mmBuffer = new byte[1024];
+        mmBuffer = new byte[10000];
         int numBytes; // bytes returned from read()
         try{
             numBytes = mmInStream.read(mmBuffer);
             final FriendRequestMessage message= FriendRequestMessage.deserialize(mmBuffer);
+
             if(message.getTAG()== MessageTag.FRIEND_REQUEST){
                 //alert the user of incoming friend request
                 Runnable promtUser = new Runnable() {
@@ -115,18 +122,18 @@ public class BluetoothServerConnectionThread extends Thread {
                         builder.setMessage("User "+message.getUserName()+" sent you friend request.")
                                 .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.ACCEPTED);
+                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.ACCEPTED,message);
                                     }
                                 })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.DECLINED);
+                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.DECLINED,message);
                                     }
                                 })
-                                .create();
+                                .create().show();
                     }
                 };
-                mainHandler=new Handler(context.getMainLooper());
+
                 mainHandler.post(promtUser);
             }
         }
@@ -147,15 +154,46 @@ public class BluetoothServerConnectionThread extends Thread {
         }
     }
 
-    public void handleUserResponseToRequest(UserResponse responseCode){
+    public void handleUserResponseToRequest(UserResponse responseCode, FriendRequestMessage message){
         //user has accepted friend request
         //write to database
         if (responseCode==UserResponse.ACCEPTED){
 
+            //add friend to your list of friends
+            DatabaseReference dbReference= FirebaseDatabase.getInstance()
+                    .getReference().child("friendships").child(HomeActivity.loggedUser.getUserId()).child(message.getId());
+            FriendsData friend1= new FriendsData(message.getUserName(), message.getPictureURI());
+            dbReference.setValue(friend1);
+
+            //add yourself to the other users's list of friends
+            DatabaseReference dbReference2= FirebaseDatabase.getInstance()
+                    .getReference().child("friendships").child(message.getId()).child(HomeActivity.loggedUser.getUserId());
+            FriendsData friend2= new FriendsData(HomeActivity.loggedUser.getUsername(), HomeActivity.loggedUser.getProfilePhotoUrl());
+            dbReference2.setValue(friend2);
+
+            //send confirmation
+            FriendRequestMessage response= new FriendRequestMessage("","","");
+            response.setTAG(MessageTag.ACCEPTED);
+            try {
+                mmOutStream.write(response.serialize());
+            }
+            catch (IOException e)
+            {
+                Log.d(AppConstants.BS_TAG,"Error while serializing report for declined request",e);
+            }
         }
         //user has declined friend request
+        //send negative response to request sender
         else if (responseCode==UserResponse.DECLINED){
-
+            FriendRequestMessage response= new FriendRequestMessage("","","");
+            response.setTAG(MessageTag.DECLINED);
+            try {
+                mmOutStream.write(response.serialize());
+            }
+            catch (IOException e)
+            {
+                Log.d(AppConstants.BS_TAG,"Error while serializing report for declined request",e);
+            }
         }
     }
 

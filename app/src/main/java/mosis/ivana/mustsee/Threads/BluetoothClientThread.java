@@ -94,6 +94,7 @@ public class BluetoothClientThread extends Thread {
 
         mainHandler = new Handler(context.getMainLooper());
         try{
+            mmBuffer= new byte[10000];
             //send request
             mmOutStream.write(friendRequest.serialize());
             //wait for answer, bocking call

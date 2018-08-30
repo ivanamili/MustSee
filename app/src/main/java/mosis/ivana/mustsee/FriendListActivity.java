@@ -34,6 +34,7 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
         findViewById(R.id.friendsActivityBtnSearchFriends).setOnClickListener(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        bluetoothServerThread = new BluetoothServerConnectionThread(FriendListActivity.this);
     }
 
     @Override
@@ -51,6 +52,10 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
         {
             case R.id.friendsActivityBtnDiscoverable:
             {
+                if(!bluetoothServerThread.isAlive()){
+                    bluetoothServerThread.start();
+                }
+
                 if (!mBluetoothAdapter.isEnabled()) {
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH_FOR_DISCOVERY);
@@ -106,5 +111,12 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
             Log.e("FRIENDS_ACTIVITY","Bluetooth not enabled!");
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        //this should stop server thread
+        bluetoothServerThread.closeServerSocket();
+        super.onDestroy();
     }
 }
