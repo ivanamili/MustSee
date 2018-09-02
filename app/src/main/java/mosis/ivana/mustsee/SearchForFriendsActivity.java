@@ -30,9 +30,9 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
 
     BluetoothAdapter mBluetoothAdapter;
 
-    ListBluetoothAdapter pairedListAdapter;
+    //ListBluetoothAdapter pairedListAdapter;
     ListBluetoothAdapter discoveredListAdapter;
-    ListView pairedList;
+    //ListView pairedList;
     ListView discoveredList;
 
     BluetoothClientThread sendRequestThread;
@@ -50,16 +50,18 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
 
         discoveredDevicesList = new ArrayList<>();
 
-        //reading already paired devices
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        ArrayList<BluetoothDevice> pairedDevicesList= new ArrayList(pairedDevices);
 
-        //setting adapter and onItemClick listener for paired devices list
-        pairedListAdapter= new ListBluetoothAdapter(pairedDevicesList, getApplicationContext());
-        pairedList= findViewById(R.id.PairedDevicesList);
-        pairedList.setAdapter(pairedListAdapter);
-        pairedList.setOnItemClickListener(this);
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+//        //reading already paired devices
+//        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+//        ArrayList<BluetoothDevice> pairedDevicesList= new ArrayList(pairedDevices);
+//
+//        //setting adapter and onItemClick listener for paired devices list
+//        pairedListAdapter= new ListBluetoothAdapter(pairedDevicesList, getApplicationContext());
+//        pairedList= findViewById(R.id.PairedDevicesList);
+//        pairedList.setAdapter(pairedListAdapter);
+//        pairedList.setOnItemClickListener(this);
 
         //setting adapter and onItemClick listener for discovered devices list
         discoveredListAdapter = new ListBluetoothAdapter(discoveredDevicesList,getApplicationContext());
@@ -93,7 +95,9 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                discoveredListAdapter.add(device);
+                //not already in the list
+                if(discoveredListAdapter.getPosition(device) == -1)
+                    discoveredListAdapter.add(device);
             }
         }
     };
@@ -136,10 +140,12 @@ public class SearchForFriendsActivity extends AppCompatActivity implements View.
         mBluetoothAdapter.cancelDiscovery();
         Toast.makeText(this,"Clicked element in "+parent.getId()+ " position "+position, Toast.LENGTH_SHORT).show();
         BluetoothDevice deviceToConnect;
-        if(parent.getId()== R.id.PairedDevicesList)
-            deviceToConnect= pairedListAdapter.getItem(position);
-        else
-            deviceToConnect=discoveredListAdapter.getItem(position);
+
+//        if(parent.getId()== R.id.PairedDevicesList)
+//            deviceToConnect= pairedListAdapter.getItem(position);
+//        else
+
+        deviceToConnect=discoveredListAdapter.getItem(position);
 
         //create client side connection
         //start thread

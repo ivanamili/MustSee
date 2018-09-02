@@ -52,9 +52,7 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
         {
             case R.id.friendsActivityBtnDiscoverable:
             {
-                if(!bluetoothServerThread.isAlive()){
-                    bluetoothServerThread.start();
-                }
+
 
                 if (!mBluetoothAdapter.isEnabled()) {
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -62,6 +60,11 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
                     return;
                 }
                 makeDeviceDiscoverable();
+                //first turn bluetooth on, then start thread
+                //the other way around makes app crash
+                if(!bluetoothServerThread.isAlive()){
+                    bluetoothServerThread.start();
+                }
                 break;
             }
 
@@ -116,7 +119,8 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         //this should stop server thread
-        bluetoothServerThread.closeServerSocket();
+        //if(bluetoothServerThread.isAlive())
+            bluetoothServerThread.closeServerSocket();
         super.onDestroy();
     }
 }

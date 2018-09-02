@@ -195,6 +195,14 @@ public class BluetoothServerConnectionThread extends Thread {
                 Log.d(AppConstants.BS_TAG,"Error while serializing report for declined request",e);
             }
         }
+        //done with this socket, close and set to null so that
+        //serverSocket can listen for more connections
+        try {
+            mSocket.close();
+        } catch (IOException e) {
+            Log.d(AppConstants.BS_TAG,"Error while closing socket at the end of friendship handshake",e);
+        }
+        mSocket=null;
     }
 
 
