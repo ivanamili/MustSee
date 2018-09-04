@@ -79,6 +79,25 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
+    <style name="WhiteBoldLabel" parent="ListTitleLabel">
+        <item name="android:textColor">@color/whiteColor</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:paddingTop">0dp</item>
+
+    </style>
+
+    <style name="WhiteNormalLabel" parent="WhiteBoldLabel">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="WhiteNormalBiggerLabel" parent="WhiteNormalLabel">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+
+
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
