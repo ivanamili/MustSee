@@ -5,6 +5,11 @@ public class FriendsData {
     private String friendUserName;
     private String firendPhotoURI;
 
+    public FriendsData()
+    {
+
+    }
+
     public FriendsData(String friendUserName, String friendPhotoURI){
         this.friendUserName=friendUserName;
         this.firendPhotoURI=friendPhotoURI;

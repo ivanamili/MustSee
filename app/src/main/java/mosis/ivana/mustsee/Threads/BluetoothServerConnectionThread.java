@@ -9,8 +9,11 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,8 +46,8 @@ public class BluetoothServerConnectionThread extends Thread {
     private byte[] mmBuffer; // mmBuffer store for the stream
 
     public BluetoothServerConnectionThread(Context context) {
-        this.context=context;
-        mainHandler=new Handler();
+        this.context = context;
+        mainHandler = new Handler();
         //get adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mSocket = null;
@@ -63,7 +66,7 @@ public class BluetoothServerConnectionThread extends Thread {
         while (true) {
             try {
                 //previous connection hasn't finished with streams, wait until mSocket is null
-                if(mSocket!=null)
+                if (mSocket != null)
                     continue;
                 //listen for connection, this is blocking call
                 mSocket = mmServerSocket.accept();
@@ -84,7 +87,7 @@ public class BluetoothServerConnectionThread extends Thread {
         }
     }
 
-    private void acquireStreams(){
+    private void acquireStreams() {
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
 
@@ -105,29 +108,29 @@ public class BluetoothServerConnectionThread extends Thread {
         mmOutStream = tmpOut;
     }
 
-    private void acceptFriendRequest(OutputStream outStream){
+    private void acceptFriendRequest(OutputStream outStream) {
         //wait for request
         mmBuffer = new byte[10000];
         int numBytes; // bytes returned from read()
-        try{
+        try {
             numBytes = mmInStream.read(mmBuffer);
-            final FriendRequestMessage message= FriendRequestMessage.deserialize(mmBuffer);
+            final FriendRequestMessage message = FriendRequestMessage.deserialize(mmBuffer);
 
-            if(message.getTAG()== MessageTag.FRIEND_REQUEST){
+            if (message.getTAG() == MessageTag.FRIEND_REQUEST) {
                 //alert the user of incoming friend request
                 Runnable promtUser = new Runnable() {
                     @Override
                     public void run() {
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage("User "+message.getUserName()+" sent you friend request.")
+                        builder.setMessage("User " + message.getUserName() + " sent you friend request.")
                                 .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.ACCEPTED,message);
+                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.ACCEPTED, message);
                                     }
                                 })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.DECLINED,message);
+                                        FriendListActivity.bluetoothServerThread.handleUserResponseToRequest(UserResponse.DECLINED, message);
                                     }
                                 })
                                 .create().show();
@@ -136,11 +139,9 @@ public class BluetoothServerConnectionThread extends Thread {
 
                 mainHandler.post(promtUser);
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             Log.d(AppConstants.BS_TAG, "There was error while transmitting data", e);
-        }
-        catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             Log.d(AppConstants.BS_TAG, "There was error while deserializing friend request", e);
         }
 
@@ -154,45 +155,77 @@ public class BluetoothServerConnectionThread extends Thread {
         }
     }
 
-    public void handleUserResponseToRequest(UserResponse responseCode, FriendRequestMessage message){
+    public void handleUserResponseToRequest(UserResponse responseCode, FriendRequestMessage message) {
         //user has accepted friend request
         //write to database
-        if (responseCode==UserResponse.ACCEPTED){
+        if (responseCode == UserResponse.ACCEPTED) {
 
+            //UPDATE YOURSELF DATABASE*****************************************************************
+            DatabaseReference root = FirebaseDatabase.getInstance().getReference();
             //add friend to your list of friends
-            DatabaseReference dbReference= FirebaseDatabase.getInstance()
-                    .getReference().child("friendships").child(HomeActivity.loggedUser.getUserId()).child(message.getId());
-            FriendsData friend1= new FriendsData(message.getUserName(), message.getPictureURI());
+            DatabaseReference dbReference = root.child("friendships").child(HomeActivity.loggedUser.getUserId()).child(message.getId());
+            FriendsData friend1 = new FriendsData(message.getUserName(), message.getPictureURI());
             dbReference.setValue(friend1);
+            //increment your own friendCount
+            DatabaseReference yourFriendCount = root.child("users").child(HomeActivity.loggedUser.getUserId()).child("friendsCount");
+            yourFriendCount.setValue(HomeActivity.loggedUser.getFriendsCount() + 1);
+            //award yourself with 10xp for making friend
+            DatabaseReference expPoints = root.child("users").child(HomeActivity.loggedUser.getUserId()).child("xpPoints");
+            expPoints.setValue(HomeActivity.loggedUser.getXpPoints() + AppConstants.FRIENDSHIP_POINTS);
+            //END UPDATE YOURSELF DATABASE
 
+            //UPDATE  DATA FOR YOUR NEW FRIEND**************************************************
             //add yourself to the other users's list of friends
-            DatabaseReference dbReference2= FirebaseDatabase.getInstance()
-                    .getReference().child("friendships").child(message.getId()).child(HomeActivity.loggedUser.getUserId());
-            FriendsData friend2= new FriendsData(HomeActivity.loggedUser.getUsername(), HomeActivity.loggedUser.getProfilePhotoUrl());
+            DatabaseReference dbReference2 = root.child("friendships").child(message.getId()).child(HomeActivity.loggedUser.getUserId());
+            FriendsData friend2 = new FriendsData(HomeActivity.loggedUser.getUsername(), HomeActivity.loggedUser.getProfilePhotoUrl());
             dbReference2.setValue(friend2);
+            //update your new friend's friendCount
+            final DatabaseReference othersFriendCount = root.child("users").child(message.getId()).child("friendsCount");
+            othersFriendCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int oldFriendCunt = dataSnapshot.getValue(Integer.class);
+                    othersFriendCount.setValue(oldFriendCunt + 1);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            //update your new friend's xpPoints
+            final DatabaseReference friendsXpPoints = root.child("users").child(message.getId()).child("xpPoints");
+            friendsXpPoints.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int oldPoints = dataSnapshot.getValue(Integer.class);
+                    friendsXpPoints.setValue(oldPoints + AppConstants.FRIENDSHIP_POINTS);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
             //send confirmation
-            FriendRequestMessage response= new FriendRequestMessage("","","");
+            FriendRequestMessage response = new FriendRequestMessage("", "", "");
             response.setTAG(MessageTag.ACCEPTED);
             try {
                 mmOutStream.write(response.serialize());
-            }
-            catch (IOException e)
-            {
-                Log.d(AppConstants.BS_TAG,"Error while serializing report for declined request",e);
+            } catch (IOException e) {
+                Log.d(AppConstants.BS_TAG, "Error while serializing report for declined request", e);
             }
         }
         //user has declined friend request
         //send negative response to request sender
-        else if (responseCode==UserResponse.DECLINED){
-            FriendRequestMessage response= new FriendRequestMessage("","","");
+        else if (responseCode == UserResponse.DECLINED) {
+            FriendRequestMessage response = new FriendRequestMessage("", "", "");
             response.setTAG(MessageTag.DECLINED);
             try {
                 mmOutStream.write(response.serialize());
-            }
-            catch (IOException e)
-            {
-                Log.d(AppConstants.BS_TAG,"Error while serializing report for declined request",e);
+            } catch (IOException e) {
+                Log.d(AppConstants.BS_TAG, "Error while serializing report for declined request", e);
             }
         }
         //done with this socket, close and set to null so that
@@ -200,9 +233,9 @@ public class BluetoothServerConnectionThread extends Thread {
         try {
             mSocket.close();
         } catch (IOException e) {
-            Log.d(AppConstants.BS_TAG,"Error while closing socket at the end of friendship handshake",e);
+            Log.d(AppConstants.BS_TAG, "Error while closing socket at the end of friendship handshake", e);
         }
-        mSocket=null;
+        mSocket = null;
     }
 
 

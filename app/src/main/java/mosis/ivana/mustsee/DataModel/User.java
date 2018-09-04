@@ -15,6 +15,7 @@ public class User {
     private String profilePhotoUrl;
     private int xpPoints;
     private String joined;
+    private int friendsCount;
     private int placesAddedCount;
     private int placesVisitedCount;
     private int mustSeeCount;
@@ -127,6 +128,7 @@ public class User {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         this.joined=df.format(c);
 
+        this.friendsCount=0;
         this.placesAddedCount=0;
         this.placesVisitedCount=0;
         this.mustSeeCount=0;
@@ -137,5 +139,11 @@ public class User {
     }
 
 
+    public int getFriendsCount() {
+        return friendsCount;
+    }
 
+    public void setFriendsCount(int friendsCount) {
+        this.friendsCount = friendsCount;
+    }
 }

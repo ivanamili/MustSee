@@ -41,5 +41,6 @@
     <string name="bluetoothSearch">Search for devices</string>
     <string name="pairedDevicesLabel">Paired devices</string>
     <string name="discoveredDevicesLabel">Discovered devices</string>
+    <string name="friendListFriendLabel">FRIENDS</string>
 </resources>
 

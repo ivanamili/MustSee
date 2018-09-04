@@ -5,4 +5,6 @@ public class AppConstants {
     public static final String APP_NAME = "MustSeeApplication";
     public static final String BS_TAG = "BLUETOOTH_SERVER_THREAD";
     public static final String BC_TAG = "BLUETOOTH_CLIENT_THREAD";
+
+    public static final int FRIENDSHIP_POINTS = 10;
 }

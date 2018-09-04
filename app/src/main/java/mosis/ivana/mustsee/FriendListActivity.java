@@ -9,8 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import mosis.ivana.mustsee.DataModel.BasicFriendInfo;
+import mosis.ivana.mustsee.DataModel.FriendsData;
+import mosis.ivana.mustsee.DataModel.ListFriendsAdapter;
 import mosis.ivana.mustsee.Threads.BluetoothServerConnectionThread;
 
 public class FriendListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -18,8 +31,13 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
     private static final int REQUEST_ENABLE_BLUETOOTH_FOR_DISCOVERY = 1;
     private static final int REQUEST_ENABLE_BLUETOOTH_FOR_SEARCH = 2;
 
+    //thread for listening to incoming bluetooth connections
     public static BluetoothServerConnectionThread bluetoothServerThread;
+
     BluetoothAdapter mBluetoothAdapter;
+
+    //adapter for list of friends
+    ListFriendsAdapter friendsAdapter;
 
 
     @Override
@@ -35,6 +53,39 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bluetoothServerThread = new BluetoothServerConnectionThread(FriendListActivity.this);
+
+        //setting adapter for list of friends
+        ListView friendList= findViewById(R.id.friendsActivityFriendsList);
+        friendsAdapter= new ListFriendsAdapter(new ArrayList<BasicFriendInfo>(),this);
+        friendList.setAdapter(friendsAdapter);
+
+        DatabaseReference friends= FirebaseDatabase.getInstance().getReference().child("friendships").child(HomeActivity.loggedUser.getUserId());
+        friends.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                friendsAdapter.add(new BasicFriendInfo(dataSnapshot.getKey(),dataSnapshot.getValue(FriendsData.class)));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity
         btnFriends.setOnClickListener(this);
 
         final DatabaseReference logedUserDatabaseRef= databaseRef.child("users").child(mAuth.getCurrentUser().getUid());
-        logedUserDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        logedUserDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loggedUser= dataSnapshot.getValue(User.class);
