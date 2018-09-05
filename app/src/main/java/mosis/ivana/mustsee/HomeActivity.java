@@ -107,7 +107,9 @@ public class HomeActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         username= headerView.findViewById(R.id.sideDrawerTxtUsername);
         points= headerView.findViewById(R.id.sideDrawerTxtExpPoints);
+
         profileImageView= headerView.findViewById(R.id.sideDrawerProfilePhoto);
+        profileImageView.setOnClickListener(this);
 
     }
 
@@ -179,6 +181,12 @@ public class HomeActivity extends AppCompatActivity
         if(v.getId()==R.id.bth_friends)
         {
             Intent i= new Intent(this,FriendListActivity.class);
+            startActivity(i);
+        }
+        else if (v.getId()==R.id.sideDrawerProfilePhoto)
+        {
+            Intent i= new Intent(this, ProfileInfoActivity.class);
+            i.putExtra("UserId",HomeActivity.loggedUser.getUserId());
             startActivity(i);
         }
     }

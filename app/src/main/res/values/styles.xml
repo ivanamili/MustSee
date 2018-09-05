@@ -81,21 +81,28 @@
 
     <style name="WhiteBoldLabel" parent="ListTitleLabel">
         <item name="android:textColor">@color/whiteColor</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:paddingTop">0dp</item>
 
     </style>
 
     <style name="WhiteNormalLabel" parent="WhiteBoldLabel">
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="WhiteNormalBiggerLabel" parent="WhiteNormalLabel">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 
-
+    <style name="SmallTextButton" parent="HomeButtonSmallPadding">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -42,6 +42,6 @@
     <string name="pairedDevicesLabel">Paired devices</string>
     <string name="discoveredDevicesLabel">Discovered devices</string>
     <string name="friendListFriendLabel">FRIENDS</string>
-    <string name="title_activity_profile_info">ProfileInfoActivity</string>
+    <string name="title_activity_profile_info">Profile Info</string>
 </resources>
 

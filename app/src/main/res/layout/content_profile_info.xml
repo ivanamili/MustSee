@@ -1,90 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#77000000"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ProfileInfoActivity"
-    tools:showIn="@layout/activity_profile_info">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profieInfoProfilePhoto"
-        android:layout_width="177dp"
-        android:layout_height="153dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/default_user_profile_image"
-        app:civ_border_color="@color/colorPrimaryDark"
-        app:civ_border_width="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".ProfileInfoActivity"
+        tools:showIn="@layout/activity_profile_info"
+        android:paddingBottom="20dp">
 
-    <TextView
-        android:id="@+id/profileInfoUserName"
-        style="@style/WhiteBoldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Loading..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profieInfoProfilePhoto" />
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profieInfoProfilePhoto"
+            android:layout_width="177dp"
+            android:layout_height="153dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/default_user_profile_image"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_width="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/profileInfoXpPoints"
-        style="@style/WhiteNormalBiggerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Loading..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileInfoUserName" />
+        <TextView
+            android:id="@+id/profileInfoUserName"
+            style="@style/WhiteBoldLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Loading..."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profieInfoProfilePhoto" />
 
-    <TextView
-        android:id="@+id/profileInfoFullNameLabel"
-        style="@style/WhiteNormalLabel"
-        android:layout_width="344dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="Full Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileInfoXpPoints" />
+        <TextView
+            android:id="@+id/profileInfoXpPoints"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Loading..."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoUserName" />
 
-    <TextView
-        android:id="@+id/profileInfoFullName"
-        style="@style/WhiteNormalBiggerLabel"
-        android:layout_width="344dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="15dp"
-        android:text="Loading..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileInfoFullNameLabel" />
+        <TextView
+            android:id="@+id/profileInfoFullNameLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Full Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoXpPoints" />
 
-    <TextView
-        android:id="@+id/profileInfoEmailLabel"
-        style="@style/WhiteNormalLabel"
-        android:layout_width="344dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:text="E-mail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileInfoFullName" />
+        <TextView
+            android:id="@+id/profileInfoFullName2"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="15dp"
+            android:text="Loading..."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoFullNameLabel" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/profileInfoEmailLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="37dp"
+            android:text="Email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoFullName2" />
+
+        <TextView
+            android:id="@+id/profileInfoEmail"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="37dp"
+            android:text="Loading..."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoEmailLabel" />
+
+        <TextView
+            android:id="@+id/profileInfoJoinedLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="37dp"
+            android:text="Joined : "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoEmail" />
+
+        <TextView
+            android:id="@+id/profileInfoJoinedDate"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="10dp"
+            android:text="Loading..."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoJoinedLabel" />
+
+        <TextView
+            android:id="@+id/profileInfoFriendsLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:text="Friends"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/profileInfoBtnSeeFriends" />
+
+        <TextView
+            android:id="@+id/profileInfoPlacesAdded"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:text="Places added"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/profileInfoBtnSeeAddedPlaces" />
+
+        <TextView
+            android:id="@+id/profileInfoPlacesVisited"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:text="Places visited"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/profileInfoBtnSeeVisitedPlaces" />
+
+        <TextView
+            android:id="@+id/profileInfoFriendsCount"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="11dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            app:layout_constraintEnd_toStartOf="@+id/profileInfoBtnSeeFriends"
+            app:layout_constraintTop_toTopOf="@+id/profileInfoBtnSeeFriends" />
+
+        <TextView
+            android:id="@+id/profileInfoPlacesAddedCount"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            app:layout_constraintEnd_toStartOf="@+id/profileInfoBtnSeeAddedPlaces"
+            app:layout_constraintTop_toTopOf="@+id/profileInfoBtnSeeAddedPlaces" />
+
+        <TextView
+            android:id="@+id/profileInfoPlacesVisitedCount"
+            style="@style/WhiteNormalBiggerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            app:layout_constraintEnd_toStartOf="@+id/profileInfoBtnSeeVisitedPlaces"
+            app:layout_constraintTop_toTopOf="@+id/profileInfoBtnSeeVisitedPlaces" />
+
+        <TextView
+            android:id="@+id/profileInfoBtnSeeFriends"
+            style="@style/SmallTextButton"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:text="See Friends"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoJoinedDate" />
+
+        <TextView
+            android:id="@+id/profileInfoBtnSeeAddedPlaces"
+            style="@style/SmallTextButton"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp"
+            android:text="See Places"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoBtnSeeFriends" />
+
+        <TextView
+            android:id="@+id/profileInfoBtnSeeVisitedPlaces"
+            style="@style/SmallTextButton"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp"
+            android:text="See Places"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileInfoBtnSeeAddedPlaces" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

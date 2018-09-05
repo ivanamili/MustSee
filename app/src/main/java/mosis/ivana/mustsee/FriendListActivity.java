@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import mosis.ivana.mustsee.DataModel.FriendsData;
 import mosis.ivana.mustsee.DataModel.ListFriendsAdapter;
 import mosis.ivana.mustsee.Threads.BluetoothServerConnectionThread;
 
-public class FriendListActivity extends AppCompatActivity implements View.OnClickListener {
+public class FriendListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     private static final int REQUEST_ENABLE_BLUETOOTH_FOR_DISCOVERY = 1;
     private static final int REQUEST_ENABLE_BLUETOOTH_FOR_SEARCH = 2;
@@ -58,6 +59,7 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
         ListView friendList= findViewById(R.id.friendsActivityFriendsList);
         friendsAdapter= new ListFriendsAdapter(new ArrayList<BasicFriendInfo>(),this);
         friendList.setAdapter(friendsAdapter);
+        friendList.setOnItemClickListener(this);
 
         DatabaseReference friends= FirebaseDatabase.getInstance().getReference().child("friendships").child(HomeActivity.loggedUser.getUserId());
         friends.addChildEventListener(new ChildEventListener() {
@@ -173,5 +175,14 @@ public class FriendListActivity extends AppCompatActivity implements View.OnClic
         //if(bluetoothServerThread.isAlive())
             bluetoothServerThread.closeServerSocket();
         super.onDestroy();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        BasicFriendInfo info= (BasicFriendInfo) parent.getItemAtPosition(position);
+
+        Intent i= new Intent(this, ProfileInfoActivity.class);
+        i.putExtra("UserId",info.getId());
+        startActivity(i);
     }
 }
