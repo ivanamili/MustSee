@@ -105,6 +105,22 @@
         <item name="android:paddingBottom">10dp</item>
     </style>
 
+    <style name="EditTextTransparentNewPlace" parent="TransparentEditText">
+        <item name="android:ems">15</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/whiteColor</item>
+        <item name="android:textColorHint">@color/whiteTransparent</item>
+
+    </style>
+
+    <style name="SpinnerStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <!--<item name="android:textColor">@color/whiteColor</item>-->
+        <item name="android:textSize">20dp</item>
+        <item name="android:background">@drawable/white_round_button_background</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

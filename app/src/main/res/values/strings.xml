@@ -43,5 +43,16 @@
     <string name="discoveredDevicesLabel">Discovered devices</string>
     <string name="friendListFriendLabel">FRIENDS</string>
     <string name="title_activity_profile_info">Profile Info</string>
+    <string name="title_activity_add_place">New Place</string>
+    <string name="NewPlaceNameHint">Name</string>
+    <string name="newPlaceCountryHintText">Country</string>
+    <string name="newPlaceCityHintText">City \\ Town \\ Province</string>
+    <string name="newPlaceDescriptionHint">Write a description</string>
+    <string name="newPlaceLocationLabel">Place will be saved with current device location</string>
+    <string name="newPlaceLongitudeLabel">Longitude</string>
+    <string name="newPlaceLatitudeLabel">Latitude</string>
+    <string name="newPlaceAddButtonLabel">ADD</string>
+    <string name="newPlaceCategorySpinnerLabel">Choose category</string>
+    <string name="newPlaceCategoryLabel">Category</string>
 </resources>
 

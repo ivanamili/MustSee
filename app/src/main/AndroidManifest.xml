@@ -71,11 +71,22 @@
                 android:value="mosis.ivana.mustsee.HomeActivity" />
         </activity>
         <activity
-            android:name=".ProfileInfoActivity"
             android:label="@string/title_activity_profile_info"
+            android:name=".ProfileInfoActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddPlaceActivity"
+            android:label="@string/title_activity_add_place"
+            android:parentActivityName=".HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mosis.ivana.mustsee.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
