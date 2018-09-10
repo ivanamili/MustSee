@@ -1,6 +1,5 @@
 package mosis.ivana.mustsee;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.firebase.geofire.GeoFire;
@@ -23,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LocationTrackingService extends Service implements LocationListener {
+    //makes easier for other activities to get user location when needed (adding new place for instance)
+    static Location CurrentLocation;
 
     protected LocationManager locationManager;
     private long minTime = 10000; // frequency update: 10 seconds
@@ -125,6 +125,7 @@ public class LocationTrackingService extends Service implements LocationListener
                 }
             }
         });
+        CurrentLocation =location;
     }
 
     @Override

@@ -11,17 +11,19 @@ public class Place {
     private String country;
     private String city;
     private String description;
+    private String categoty;
 
-    private Location coordinates;
+    private SimpleLocation coordinates;
 
     public Place()
     {
 
     }
-    public Place(String name, String photoURL, int commentCount, int likeCount,
-                 String country, String city, String description,
-                 Location coordinates)
+    public Place(String placeID, String name, String photoURL, int commentCount, int likeCount,
+                 String country, String city, String description, String category,
+                 SimpleLocation coordinates)
     {
+        this.placeID=placeID;
         this.name=name;
         this.photoURL=photoURL;
         this.commentCount=commentCount;
@@ -29,7 +31,21 @@ public class Place {
         this.country=country;
         this.city=city;
         this.description=description;
+        this.categoty=category;
         this.coordinates=coordinates;
+    }
+
+    public Place(String placeID, String name, String country, String city, String description, String category){
+        this.placeID=placeID;
+        this.name=name;
+        this.photoURL="";
+        this.commentCount=0;
+        this.likeCount=0;
+        this.country=country;
+        this.city=city;
+        this.description=description;
+        this.categoty=category;
+        this.coordinates=null;
     }
 
     public String getName() {
@@ -88,11 +104,11 @@ public class Place {
         this.description = description;
     }
 
-    public Location getCoordinates() {
+    public SimpleLocation getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(Location coordinates) {
+    public void setCoordinates(SimpleLocation coordinates) {
         this.coordinates = coordinates;
     }
 
@@ -102,5 +118,13 @@ public class Place {
 
     public void setPlaceID(String placeID) {
         this.placeID = placeID;
+    }
+
+    public String getCategoty() {
+        return categoty;
+    }
+
+    public void setCategoty(String categoty) {
+        this.categoty = categoty;
     }
 }
