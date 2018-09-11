@@ -92,5 +92,13 @@ public class ProfileInfoActivity extends AppCompatActivity implements ValueEvent
     @Override
     public void onClick(View v) {
         //show adequate lists of friends or places
+        switch (v.getId()){
+            case R.id.profileInfoBtnSeeFriends:
+            {
+                Intent i= new Intent(this, FriendsUniversalActivity.class);
+                i.putExtra("UserId",user.getUserId());
+                startActivity(i);
+            }
+        }
     }
 }

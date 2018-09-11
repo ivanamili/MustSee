@@ -54,5 +54,6 @@
     <string name="newPlaceAddButtonLabel">ADD</string>
     <string name="newPlaceCategorySpinnerLabel">Choose category</string>
     <string name="newPlaceCategoryLabel">Category</string>
+    <string name="title_activity_friends_universal">Friends</string>
 </resources>
 
