@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import android.graphics.Bitmap;
 import android.widget.Toast;
 
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -163,8 +166,28 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onSuccess(Uri uri) {
                         newPlace.setPhotoURL(uri.toString());
+                        //save new place
                         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference().child("places").child(newPlace.getPlaceID());
                         databaseRef.setValue(newPlace);
+
+                        //save place location to geofire
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("geofire").child("locPlaces");
+                        GeoFire geoFire = new GeoFire(ref);
+
+                        geoFire.setLocation(newPlace.getPlaceID(), new GeoLocation(LocationTrackingService.CurrentLocation.getLatitude(),
+                                LocationTrackingService.CurrentLocation.getLongitude()), new GeoFire.CompletionListener() {
+                            @Override
+                            public void onComplete(String key, DatabaseError error) {
+                                if(error!=null)
+                                {
+                                    Log.e("ADD_PLACE_ACTIVITY","Writing place location failed! Error: "+error);
+                                }
+                                else
+                                {
+                                    Log.e("ADD_PLACE_ACTIVITY", "Place location written in database sucessfully.");
+                                }
+                            }
+                        });
 
                         //increase placesAdded count for the user
                         final DatabaseReference userReference=FirebaseDatabase.getInstance()
@@ -181,7 +204,30 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
 
                             }
                         });
-                        Toast.makeText(AddPlaceActivity.this, "You have successfully added new place!", Toast.LENGTH_SHORT).show();
+
+                        //add the place to the list of added places for that user
+                        final DatabaseReference userAddedPlaces= FirebaseDatabase.getInstance().getReference()
+                                .child("userPlaceRelations").child("addedPlaces")
+                                .child(HomeActivity.loggedUser.getUserId()).child(newPlace.getPlaceID());
+                        userAddedPlaces.setValue(true);
+
+                        //reward user with points
+                        final DatabaseReference userReference2= FirebaseDatabase.getInstance()
+                                .getReference().child("users").child(HomeActivity.loggedUser.getUserId()).child("xpPoints");
+                        userReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                int oldPoints = dataSnapshot.getValue(Integer.class);
+                                userReference2.setValue(oldPoints+ AppConstants.NEW_PLACE_POINTS);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        Toast.makeText(AddPlaceActivity.this,
+                                "You have successfully added new place! +" + AppConstants.NEW_PLACE_POINTS+"XP" , Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
