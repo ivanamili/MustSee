@@ -32,7 +32,7 @@ public class FriendsUniversalActivity extends AppCompatActivity implements Adapt
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         ListView friendList= findViewById(R.id.universalFriendsList);
         friendsAdapter= new ListFriendsAdapter(new ArrayList<BasicFriendInfo>(),this);

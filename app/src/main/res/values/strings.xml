@@ -55,5 +55,6 @@
     <string name="newPlaceCategorySpinnerLabel">Choose category</string>
     <string name="newPlaceCategoryLabel">Category</string>
     <string name="title_activity_friends_universal">Friends</string>
+    <string name="title_activity_places_list">Places</string>
 </resources>
 
