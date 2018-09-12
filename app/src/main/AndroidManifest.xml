@@ -107,6 +107,8 @@
         <activity
             android:name=".PlaceInfoActivity"
             android:label="@string/title_activity_place_info"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
