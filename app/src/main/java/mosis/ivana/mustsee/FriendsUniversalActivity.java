@@ -72,6 +72,7 @@ public class FriendsUniversalActivity extends AppCompatActivity implements Adapt
         });
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         BasicFriendInfo info= (BasicFriendInfo) parent.getItemAtPosition(position);

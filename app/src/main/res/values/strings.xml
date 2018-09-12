@@ -56,5 +56,6 @@
     <string name="newPlaceCategoryLabel">Category</string>
     <string name="title_activity_friends_universal">Friends</string>
     <string name="title_activity_places_list">Places</string>
+    <string name="title_activity_place_info">PlaceInfoActivity</string>
 </resources>
 

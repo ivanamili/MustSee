@@ -5,6 +5,11 @@ public class SimpleLocation {
     private double latitude;
     private double lognitude;
 
+    public SimpleLocation()
+    {
+
+    }
+
     public SimpleLocation(double latitude, double lognitude){
         this.latitude=latitude;
         this.lognitude=lognitude;

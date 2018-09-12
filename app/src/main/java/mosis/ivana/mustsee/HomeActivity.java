@@ -172,6 +172,25 @@ public class HomeActivity extends AppCompatActivity
             startActivity(i);
         }
 
+        else if(id==R.id.nav_my_places){
+            Intent i= new Intent(this, PlacesListActivity.class);
+            i.putExtra("ListType", "addedPlaces");
+            i.putExtra("UserId",loggedUser.getUserId());
+            startActivity(i);
+        }
+        else if(id==R.id.nav_visited_places){
+            Intent i= new Intent(this, PlacesListActivity.class);
+            i.putExtra("ListType", "visitedPlaces");
+            i.putExtra("UserId",loggedUser.getUserId());
+            startActivity(i);
+        }
+        else if(id==R.id.nav_my_must_see_list){
+            Intent i= new Intent(this, PlacesListActivity.class);
+            i.putExtra("ListType", "mustSeePlaces");
+            i.putExtra("UserId",loggedUser.getUserId());
+            startActivity(i);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -188,6 +207,12 @@ public class HomeActivity extends AppCompatActivity
         {
             Intent i= new Intent(this, ProfileInfoActivity.class);
             i.putExtra("UserId",HomeActivity.loggedUser.getUserId());
+            startActivity(i);
+        }
+        else if (v.getId()==R.id.btnSearchPlaces)
+        {
+            Intent i= new Intent(this, PlacesListActivity.class);
+            i.putExtra("ListType", "ALL");
             startActivity(i);
         }
     }

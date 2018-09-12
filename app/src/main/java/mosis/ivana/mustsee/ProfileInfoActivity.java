@@ -34,6 +34,7 @@ public class ProfileInfoActivity extends AppCompatActivity implements ValueEvent
         setContentView(R.layout.activity_profile_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         Intent intent= getIntent();
         String userId=intent.getStringExtra("UserId");
@@ -98,6 +99,21 @@ public class ProfileInfoActivity extends AppCompatActivity implements ValueEvent
                 Intent i= new Intent(this, FriendsUniversalActivity.class);
                 i.putExtra("UserId",user.getUserId());
                 startActivity(i);
+                break;
+            }
+            case R.id.profileInfoBtnSeeAddedPlaces: {
+                Intent i = new Intent(this, PlacesListActivity.class);
+                i.putExtra("ListType", "addedPlaces");
+                i.putExtra("UserId", user.getUserId());
+                startActivity(i);
+                break;
+            }
+            case R.id.profileInfoBtnSeeVisitedPlaces:{
+                Intent i = new Intent(this, PlacesListActivity.class);
+                i.putExtra("ListType", "visitedPlaces");
+                i.putExtra("UserId", user.getUserId());
+                startActivity(i);
+                break;
             }
         }
     }

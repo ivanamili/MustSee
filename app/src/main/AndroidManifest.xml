@@ -100,9 +100,13 @@
         </activity>
         <activity
             android:name=".PlacesListActivity"
-            android:label="@string/title_activity_places_list"
             android:configChanges="orientation"
+            android:label="@string/title_activity_places_list"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PlaceInfoActivity"
+            android:label="@string/title_activity_place_info"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
