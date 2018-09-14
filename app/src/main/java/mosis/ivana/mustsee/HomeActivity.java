@@ -217,6 +217,10 @@ public class HomeActivity extends AppCompatActivity
             i.putExtra("UserId",loggedUser.getUserId());
             startActivity(i);
         }
+        else if (id==R.id.nav_leaderboard){
+            Intent i= new Intent(this, LeaderboardActivity.class);
+            startActivity(i);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
