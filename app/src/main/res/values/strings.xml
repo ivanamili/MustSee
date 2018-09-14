@@ -60,5 +60,6 @@
     <string name="title_activity_show_me">My location</string>
     <string name="title_activity_show_users_on_map">Map</string>
     <string name="title_activity_leaderboard">Leaderboard</string>
+    <string name="title_activity_search_in_radius">Map</string>
 </resources>
 

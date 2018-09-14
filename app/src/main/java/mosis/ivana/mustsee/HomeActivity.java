@@ -139,6 +139,9 @@ public class HomeActivity extends AppCompatActivity
         profileImageView= headerView.findViewById(R.id.sideDrawerProfilePhoto);
         profileImageView.setOnClickListener(this);
 
+        Button nearMe= findViewById(R.id.btnNearMe);
+        nearMe.setOnClickListener(this);
+
     }
 
     @Override
@@ -249,6 +252,10 @@ public class HomeActivity extends AppCompatActivity
         else if (v.getId()==R.id.sideDrawerTxtShowMeOnMap)
         {
             Intent i = new Intent(this, ShowMeActivity.class);
+            startActivity(i);
+        }
+        else if (v.getId()==R.id.btnNearMe){
+            Intent i= new Intent(this, SearchInRadiusActivity.class);
             startActivity(i);
         }
     }

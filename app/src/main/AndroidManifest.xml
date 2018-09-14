@@ -134,19 +134,26 @@
         <activity
             android:name=".ShowUsersOnMapActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_show_users_on_map">
+            android:label="@string/title_activity_show_users_on_map"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mosis.ivana.mustsee.HomeActivity" />
         </activity>
         <activity
             android:name=".LeaderboardActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation"
             android:label="@string/title_activity_leaderboard"
             android:parentActivityName=".HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mosis.ivana.mustsee.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".SearchInRadiusActivity"
+            android:label="@string/title_activity_search_in_radius">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mosis.ivana.mustsee.HomeActivity" />
