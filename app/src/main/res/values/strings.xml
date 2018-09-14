@@ -22,7 +22,7 @@
     <string name="show_map_title">Show Map</string>
     <string name="search_place_title">Search Places</string>
     <string name="near_me">Near Me</string>
-    <string name="my_friends_title">My Friends</string>
+    <string name="my_friends_title">Users on map</string>
 
     <string name="show_me_on_map">Show me on map</string>
 
@@ -57,5 +57,7 @@
     <string name="title_activity_friends_universal">Friends</string>
     <string name="title_activity_places_list">Places</string>
     <string name="title_activity_place_info">PlaceInfoActivity</string>
+    <string name="title_activity_show_me">My location</string>
+    <string name="title_activity_show_users_on_map">Map</string>
 </resources>
 

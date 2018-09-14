@@ -149,6 +149,7 @@ public class BluetoothServerConnectionThread extends Thread {
 
     public void closeServerSocket() {
         try {
+            if(mmServerSocket!=null)
             mmServerSocket.close();
         } catch (IOException e) {
             Log.e(AppConstants.BS_TAG, "Could not close the server socket", e);

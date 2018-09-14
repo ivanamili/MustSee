@@ -141,6 +141,10 @@ public class PlacesListActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Place selectedPlace=(Place) parent.getItemAtPosition(position);
 
+            Intent i=new Intent(this, PlaceInfoActivity.class);
+            i.putExtra("placeId",selectedPlace.getPlaceID());
+            startActivity(i);
     }
 }

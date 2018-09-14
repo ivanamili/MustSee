@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/placeInfoCommentCount"
-            android:layout_width="85dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             style="@style/WhiteBoldLabel"
             android:text="comm"
@@ -77,6 +77,94 @@
             app:layout_constraintTop_toBottomOf="@id/placeInfoPicture"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/placeInfoCountryLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Country"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeInfoHeart"/>
+        <TextView
+            android:id="@+id/placeInfoCountry"
+            style="@style/WhiteBoldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="place country"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeInfoCountryLabel"/>
+
+        <TextView
+            android:id="@+id/placeInfoTownLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="City / town / province"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeInfoCountry"/>
+
+        <TextView
+            android:id="@+id/placeInfoTown"
+            style="@style/WhiteBoldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="place town"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeInfoTownLabel"/>
+
+        <TextView
+            android:id="@+id/placeInfoCategoryLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeInfoTown"/>
+
+        <TextView
+            android:id="@+id/placeInfoCategory"
+            style="@style/WhiteBoldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="place category"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeInfoCategoryLabel"/>
+
+        <TextView
+            android:id="@+id/placeInfoDescriptionLabel"
+            style="@style/WhiteNormalLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeInfoCategory"/>
+
+        <TextView
+            android:id="@+id/placeInfoDescription"
+            style="@style/WhiteBoldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="place desc"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeInfoDescriptionLabel"/>
+
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -1,7 +1,9 @@
 package mosis.ivana.mustsee;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mosis.ivana.mustsee.DataModel.User;
@@ -45,6 +49,7 @@ public class HomeActivity extends AppCompatActivity
     TextView points;
     DrawerLayout drawer;
     private ProgressBar spinner;
+    public static Bitmap image;
 
 
     @Override
@@ -78,6 +83,24 @@ public class HomeActivity extends AppCompatActivity
                 username.setText(loggedUser.getUsername());
                 points.setText(String.valueOf(loggedUser.getXpPoints()));
                 spinner.setVisibility(View.GONE);
+
+                Picasso.get().load(loggedUser.getProfilePhotoUrl()).resize(70,70).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        image=bitmap;
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -108,6 +131,10 @@ public class HomeActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         username= headerView.findViewById(R.id.sideDrawerTxtUsername);
         points= headerView.findViewById(R.id.sideDrawerTxtExpPoints);
+
+        //set onClick listeners
+        TextView showMe= headerView.findViewById(R.id.sideDrawerTxtShowMeOnMap);
+        showMe.setOnClickListener(this);
 
         profileImageView= headerView.findViewById(R.id.sideDrawerProfilePhoto);
         profileImageView.setOnClickListener(this);
@@ -200,7 +227,7 @@ public class HomeActivity extends AppCompatActivity
     public void onClick(View v) {
         if(v.getId()==R.id.bth_friends)
         {
-            Intent i= new Intent(this,FriendListActivity.class);
+            Intent i= new Intent(this,ShowUsersOnMapActivity.class);
             startActivity(i);
         }
         else if (v.getId()==R.id.sideDrawerProfilePhoto)
@@ -213,6 +240,11 @@ public class HomeActivity extends AppCompatActivity
         {
             Intent i= new Intent(this, PlacesListActivity.class);
             i.putExtra("ListType", "ALL");
+            startActivity(i);
+        }
+        else if (v.getId()==R.id.sideDrawerTxtShowMeOnMap)
+        {
+            Intent i = new Intent(this, ShowMeActivity.class);
             startActivity(i);
         }
     }
